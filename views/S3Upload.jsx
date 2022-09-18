@@ -5,11 +5,24 @@ import { useS3Upload } from "next-s3-upload";
 import Webcam from "react-webcam";
 import ExtractedData from "../components/ExtractedData";
 import Header from "../components/Header";
+import dynamic from "next/dynamic";
 
 const videoConstraints = {
   //   width: 90,
   //   height: 720,
   facingMode: { exact: "environment" },
+};
+
+let dataURLtoBlob = (dataurl) => {
+  var arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
 };
 
 export default function ExtractText() {
@@ -20,6 +33,7 @@ export default function ExtractText() {
 
   let uploadToS3AndExtract = async (img) => {
     let { bucket, key, url } = await uploadToS3(img);
+    console.log(url);
     setImageUrl(url);
     fetch("/api/extract-text-from-image", {
       method: "POST",
@@ -37,11 +51,13 @@ export default function ExtractText() {
 
   useEffect(() => {
     if (extractedData) {
-      if (extractedData.Blocks.length > 0) {
+      if (extractedData?.Blocks?.length > 0) {
         setExtracted(true);
       }
     }
   }, [extractedData]);
+
+  console.log(extractedData);
 
   return (
     <div>
@@ -57,7 +73,7 @@ export default function ExtractText() {
             className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
             onClick={async () => {
               let img = getScreenshot();
-              uploadToS3AndExtract(img);
+              uploadToS3AndExtract(dataURLtoBlob(img));
             }}
           >
             Scan
