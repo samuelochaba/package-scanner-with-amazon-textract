@@ -55,7 +55,8 @@ export default function ExtractText() {
     }
 
     let result = await response.json();
-    setExtractedData(result);
+    alert(result);
+    // setExtractedData(result);
     setAnalysing(false);
   };
 
