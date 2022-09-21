@@ -33,22 +33,27 @@ export default function ExtractText() {
   const [analysing, setAnalysing] = useState(null);
   let { files, uploadToS3 } = useS3Upload();
 
-  console.log(files);
-
   let uploadToS3AndExtract = async (img) => {
     let { bucket, key, url } = await uploadToS3(img);
     setImageUrl(url);
     setAnalysing(true);
-    let response = await fetch("/api/extract-text-from-image", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key,
-        bucket,
-      }),
-    });
+    let response;
+    try {
+      response = await fetch("/api/extract-text-from-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key,
+          bucket,
+        }),
+      });
+    } catch (e) {
+      alert(e);
+      console.log(e);
+    }
+
     let result = await response.json();
     setExtractedData(result);
     setAnalysing(false);
@@ -61,8 +66,6 @@ export default function ExtractText() {
       }
     }
   }, [extractedData]);
-
-  console.log(analysing);
 
   return (
     <div>
