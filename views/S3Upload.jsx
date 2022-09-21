@@ -5,7 +5,7 @@ import { useS3Upload } from "next-s3-upload";
 import Webcam from "react-webcam";
 import ExtractedData from "../components/ExtractedData";
 import Header from "../components/Header";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Loading from "../components/Loading";
 
 const videoConstraints = {
@@ -50,13 +50,12 @@ export default function ExtractText() {
         }),
       });
     } catch (e) {
-      alert(e);
       console.log(e);
     }
 
     let result = await response.json();
-    alert(result);
-    // setExtractedData(result);
+
+    setExtractedData(result);
     setAnalysing(false);
   };
 
@@ -68,7 +67,7 @@ export default function ExtractText() {
     }
   }, [extractedData]);
 
-  alert(extractedData);
+  extractedData;
 
   return (
     <div>
