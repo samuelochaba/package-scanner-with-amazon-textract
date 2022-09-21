@@ -67,6 +67,8 @@ export default function ExtractText() {
     }
   }, [extractedData]);
 
+  alert(extractedData);
+
   return (
     <div>
       <Header text="Please scan each and every package that is being delivered at this building." />
