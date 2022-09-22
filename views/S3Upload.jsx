@@ -11,7 +11,7 @@ import Loading from "../components/Loading";
 const videoConstraints = {
   //   width: 90,
   //   height: 720,
-  facingMode: { exact: "environment" },
+  // facingMode: { exact: "environment" },
 };
 
 let dataURLtoBlob = (dataurl) => {
@@ -54,9 +54,11 @@ export default function ExtractText() {
     }
 
     let result = await response.json();
-
-    setExtractedData(result);
-    setAnalysing(false);
+    if (typeof window !== "undefined") {
+      alert(result);
+    }
+    // setExtractedData(result);
+    // setAnalysing(false);
   };
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export default function ExtractText() {
     <div>
       <Header text="Please scan each and every package that is being delivered at this building." />
       {files.length > 0 && files[files.length - 1].progress < 100 ? (
-        <Loading text="Uploading snap to s3 bucket..." />
+        <Loading text="Uploading  snap to s3 bucket..." />
       ) : files.length > 0 &&
         files[files.length - 1].progress === 100 &&
         analysing === true ? (
