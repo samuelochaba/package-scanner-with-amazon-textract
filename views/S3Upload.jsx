@@ -54,11 +54,11 @@ export default function ExtractText() {
     }
 
     let result = await response.json();
-    if (typeof window !== "undefined") {
-      alert(result);
-    }
-    // setExtractedData(result);
-    // setAnalysing(false);
+    // if (typeof window !== "undefined") {
+    //   alert(result);
+    // }
+    setExtractedData(result);
+    setAnalysing(false);
   };
 
   useEffect(() => {
