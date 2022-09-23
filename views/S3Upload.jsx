@@ -7,11 +7,12 @@ import ExtractedData from "../components/ExtractedData";
 import Header from "../components/Header";
 // import dynamic from "next/dynamic";
 import Loading from "../components/Loading";
+import axios from "axios";
 
 const videoConstraints = {
   //   width: 90,
   //   height: 720,
-  facingMode: { exact: "environment" },
+  // facingMode: { exact: "environment" },
 };
 
 let dataURLtoBlob = (dataurl) => {
@@ -45,29 +46,22 @@ export default function ExtractText() {
       ...extractState,
       analysing: true,
     });
-    let response;
-    try {
-      response = await fetch("/api/extract-text-from-image", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          key,
-          bucket,
-        }),
+
+    axios
+      .post("/api/extract-text-from-image", {
+        key,
+        bucket,
+      })
+      .then(function (response) {
+        console.log(response);
+        setExtractState({
+          ...extractState,
+          extractedData: response.data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-    } catch (e) {
-      console.log(e);
-    }
-
-    let result = await response.json();
-
-    setExtractState({
-      ...extractState,
-      extractedData: result,
-      analysing: false,
-    });
   };
 
   useEffect(() => {
