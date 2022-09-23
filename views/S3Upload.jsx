@@ -85,6 +85,10 @@ export default function ExtractText() {
         analysing === true ? (
         <Loading text="Extracting text from image..." />
       ) : (
+        ""
+      )}
+
+      {!files.length > 0 && files[files.length - 1].progress < 100 && (
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
