@@ -28,15 +28,23 @@ let dataURLtoBlob = (dataurl) => {
 
 export default function ExtractText() {
   let [imageUrl, setImageUrl] = useState();
-  const [extractedData, setExtractedData] = useState(null);
-  const [extracted, setExtracted] = useState(false);
-  const [analysing, setAnalysing] = useState(null);
+
+  const [extractState, setExtractState] = useState({
+    extractedData: null,
+    extracted: false,
+    analysing: null,
+  });
   let { files, uploadToS3 } = useS3Upload();
+
+  const { extracted, extractedData, analysing } = extractState;
 
   let uploadToS3AndExtract = async (img) => {
     let { bucket, key, url } = await uploadToS3(img);
     setImageUrl(url);
-    setAnalysing(true);
+    setExtractState({
+      ...extractState,
+      analysing: true,
+    });
     let response;
     try {
       response = await fetch("/api/extract-text-from-image", {
@@ -54,17 +62,21 @@ export default function ExtractText() {
     }
 
     let result = await response.json();
-    // if (typeof window !== "undefined") {
-    //   alert(result);
-    // }
-    setExtractedData(result);
-    setAnalysing(false);
+
+    setExtractState({
+      ...extractState,
+      extractedData: result,
+      analysing: false,
+    });
   };
 
   useEffect(() => {
     if (extractedData) {
       if (extractedData?.Blocks?.length > 0) {
-        setExtracted(true);
+        setExtractState({
+          ...extractState,
+          extracted: true,
+        });
       }
     }
   }, [extractedData]);
