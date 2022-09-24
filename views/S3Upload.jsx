@@ -88,26 +88,24 @@ export default function ExtractText() {
         ""
       )}
 
-      {!files.length > 0 && files[files.length - 1].progress < 100 && (
-        <Webcam
-          audio={false}
-          screenshotFormat="image/jpeg"
-          className="w-[90%]  mx-auto rounded-lg mt-5"
-          videoConstraints={videoConstraints}
-        >
-          {({ getScreenshot }) => (
-            <button
-              className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-              onClick={async () => {
-                let img = getScreenshot();
-                uploadToS3AndExtract(dataURLtoBlob(img));
-              }}
-            >
-              Scan
-            </button>
-          )}
-        </Webcam>
-      )}
+      <Webcam
+        audio={false}
+        screenshotFormat="image/jpeg"
+        className="w-[90%]  mx-auto rounded-lg mt-5"
+        videoConstraints={videoConstraints}
+      >
+        {({ getScreenshot }) => (
+          <button
+            className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+            onClick={async () => {
+              let img = getScreenshot();
+              uploadToS3AndExtract(dataURLtoBlob(img));
+            }}
+          >
+            Scan
+          </button>
+        )}
+      </Webcam>
 
       {extracted && (
         <ExtractedData extractedData={extractedData} imageUrl={imageUrl} />
