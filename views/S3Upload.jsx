@@ -75,6 +75,12 @@ export default function ExtractText() {
     }
   }, [extractedData]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      alert(extracted);
+    }
+  }, [extracted]);
+
   return (
     <div>
       <Header text="Please scan each and every package that is being delivered at this building." />
