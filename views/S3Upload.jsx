@@ -2,17 +2,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { useS3Upload } from "next-s3-upload";
-import Webcam from "react-webcam";
 import ExtractedData from "../components/ExtractedData";
 import Header from "../components/Header";
 // import dynamic from "next/dynamic";
 import Loading from "../components/Loading";
 import axios from "axios";
+import Camera from "../components/Webcam";
 
-const videoConstraints = {
-  //   width: 90,
-  //   height: 720,
+const labelConstraints = {
   facingMode: { exact: "environment" },
+};
+
+const selfieConstraints = {
+  facingMode: "user",
 };
 
 let dataURLtoBlob = (dataurl) => {
@@ -75,24 +77,10 @@ export default function ExtractText() {
         analysing === true ? (
         <Loading text="Extracting text from image..." />
       ) : (
-        <Webcam
-          audio={false}
-          screenshotFormat="image/jpeg"
-          className="w-[90%]  mx-auto rounded-lg mt-5"
-          videoConstraints={videoConstraints}
-        >
-          {({ getScreenshot }) => (
-            <button
-              className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-              onClick={async () => {
-                let img = getScreenshot();
-                uploadToS3AndExtract(dataURLtoBlob(img));
-              }}
-            >
-              Scan
-            </button>
-          )}
-        </Webcam>
+        <>
+          <Camera constraints={selfieConstraints} />
+          <Camera constraints={labelConstraints} />
+        </>
       )}
 
       {extractedImages.length > 0 &&
