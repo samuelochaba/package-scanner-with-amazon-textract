@@ -1196,11 +1196,6 @@
     "uuid" "8.0.0"
     "xml2js" "0.4.19"
 
-"aws-textract-helper@^1.0.0-beta.5":
-  "integrity" "sha512-xsKyfPKcqgLdnBP81OiyUVEgVUDUNZNBy0E4BNQVokssuxUS0SZCcVxmOaiIdMDNd2VDW9StA/9UZMntgofWHg=="
-  "resolved" "https://registry.npmjs.org/aws-textract-helper/-/aws-textract-helper-1.0.0-beta.5.tgz"
-  "version" "1.0.0-beta.5"
-
 "axe-core@^4.4.3":
   "integrity" "sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w=="
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.4.3.tgz"
