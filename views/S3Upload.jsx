@@ -79,7 +79,7 @@ export default function ExtractText() {
       ) : (
         <>
           <Camera constraints={selfieConstraints} />
-          <Camera constraints={labelConstraints} />
+          <Camera constraints={selfieConstraints} />
         </>
       )}
 
