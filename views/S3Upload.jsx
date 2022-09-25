@@ -12,7 +12,7 @@ import axios from "axios";
 const videoConstraints = {
   //   width: 90,
   //   height: 720,
-  facingMode: { exact: "environment" },
+  // facingMode: { exact: "environment" },
 };
 
 let dataURLtoBlob = (dataurl) => {
