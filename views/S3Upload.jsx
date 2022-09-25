@@ -35,6 +35,7 @@ export default function ExtractText() {
     extracted: false,
     analysing: null,
   });
+  const [extractedImages, setExtractedImages] = useState([]);
   let { files, uploadToS3 } = useS3Upload();
 
   const { extracted, extractedData, analysing } = extractState;
@@ -53,33 +54,18 @@ export default function ExtractText() {
         bucket,
       })
       .then(function (response) {
-        console.log(response);
         setExtractState({
           ...extractState,
           extractedData: response.data,
         });
+        setExtractedImages([...extractedImages, response.data]);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  useEffect(() => {
-    if (extractedData) {
-      if (extractedData?.Blocks?.length > 0) {
-        setExtractState({
-          ...extractState,
-          extracted: true,
-        });
-      }
-    }
-  }, [extractedData]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      alert(extracted);
-    }
-  }, [extracted]);
+  console.log(extractedImages);
 
   return (
     <div>
@@ -91,31 +77,36 @@ export default function ExtractText() {
         analysing === true ? (
         <Loading text="Extracting text from image..." />
       ) : (
-        ""
+        <Webcam
+          audio={false}
+          screenshotFormat="image/jpeg"
+          className="w-[90%]  mx-auto rounded-lg mt-5"
+          videoConstraints={videoConstraints}
+        >
+          {({ getScreenshot }) => (
+            <button
+              className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+              onClick={async () => {
+                let img = getScreenshot();
+                uploadToS3AndExtract(dataURLtoBlob(img));
+              }}
+            >
+              Scan
+            </button>
+          )}
+        </Webcam>
       )}
 
-      <Webcam
-        audio={false}
-        screenshotFormat="image/jpeg"
-        className="w-[90%]  mx-auto rounded-lg mt-5"
-        videoConstraints={videoConstraints}
-      >
-        {({ getScreenshot }) => (
-          <button
-            className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-            onClick={async () => {
-              let img = getScreenshot();
-              uploadToS3AndExtract(dataURLtoBlob(img));
-            }}
-          >
-            Scan
-          </button>
-        )}
-      </Webcam>
-
-      {extracted && (
-        <ExtractedData extractedData={extractedData} imageUrl={imageUrl} />
-      )}
+      {extractedImages.length > 0 &&
+        extractedImages.map((imageData, i) => {
+          return (
+            <ExtractedData
+              key={i}
+              extractedData={imageData}
+              imageUrl={imageUrl}
+            />
+          );
+        })}
     </div>
   );
 }
