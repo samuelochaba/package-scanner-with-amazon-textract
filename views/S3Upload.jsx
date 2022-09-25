@@ -12,7 +12,7 @@ import axios from "axios";
 const videoConstraints = {
   //   width: 90,
   //   height: 720,
-  // facingMode: { exact: "environment" },
+  facingMode: { exact: "environment" },
 };
 
 let dataURLtoBlob = (dataurl) => {
@@ -38,7 +38,7 @@ export default function ExtractText() {
   const [extractedImages, setExtractedImages] = useState([]);
   let { files, uploadToS3 } = useS3Upload();
 
-  const { extracted, extractedData, analysing } = extractState;
+  const { analysing } = extractState;
 
   let uploadToS3AndExtract = async (img) => {
     let { bucket, key, url } = await uploadToS3(img);
@@ -64,8 +64,6 @@ export default function ExtractText() {
         console.log(error);
       });
   };
-
-  console.log(extractedImages);
 
   return (
     <div>
