@@ -98,7 +98,7 @@ export default function ExtractText() {
       )}
 
       {extractedImages.length > 0 &&
-        extractedImages.map((imageData, i) => {
+        extractedImages?.map((imageData, i) => {
           return (
             <ExtractedData
               key={i}
