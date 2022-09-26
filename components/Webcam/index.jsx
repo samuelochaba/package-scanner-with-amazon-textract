@@ -15,43 +15,47 @@ let dataURLtoBlob = (dataurl) => {
 const Camera = ({ constraints, uploadToS3AndExtract }) => {
   return (
     <>
-      <Webcam
-        audio={false}
-        screenshotFormat="image/jpeg"
-        className="h-[30vh] w-[90vw]    mx-auto rounded-tl-lg rounded-tr-lg mt-5"
-        videoConstraints={constraints}
-      >
-        {
-          ({ getScreenshot }) => ""
-          // <button
-          //   className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-          //   onClick={async () => {
-          //     let img = getScreenshot();
-          //     uploadToS3AndExtract(dataURLtoBlob(img));
-          //   }}
-          // >
-          //   Scan
-          // </button>
-        }
-      </Webcam>
-      <Webcam
-        audio={false}
-        screenshotFormat="image/jpeg"
-        className="h-[30vh] w-[90vw]  mx-auto rounded-bl-lg rounded-br-lg"
-        videoConstraints={constraints}
-      >
-        {({ getScreenshot }) => (
-          <button
-            className="rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-            onClick={async () => {
-              let img = getScreenshot();
-              uploadToS3AndExtract(dataURLtoBlob(img));
-            }}
-          >
-            Scan
-          </button>
-        )}
-      </Webcam>
+      <div className="h-[30vh] border border-[red] w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
+        <Webcam
+          audio={false}
+          screenshotFormat="image/jpeg"
+          videoConstraints={constraints}
+          className="w-[100%"
+        >
+          {
+            ({ getScreenshot }) => ""
+            // <button
+            //   className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+            //   onClick={async () => {
+            //     let img = getScreenshot();
+            //     uploadToS3AndExtract(dataURLtoBlob(img));
+            //   }}
+            // >
+            //   Scan
+            // </button>
+          }
+        </Webcam>
+      </div>
+      <div className="h-[30vh] w-[90vw] mx-auto  border border-[red] rounded-bl-lg rounded-br-lg">
+        <Webcam
+          audio={false}
+          screenshotFormat="image/jpeg"
+          className="w-[100%"
+          videoConstraints={constraints}
+        >
+          {({ getScreenshot }) => (
+            <button
+              className="rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+              onClick={async () => {
+                let img = getScreenshot();
+                uploadToS3AndExtract(dataURLtoBlob(img));
+              }}
+            >
+              Scan
+            </button>
+          )}
+        </Webcam>
+      </div>
     </>
   );
 };
