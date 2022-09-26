@@ -17,18 +17,6 @@ const selfieConstraints = {
   facingMode: "user",
 };
 
-let dataURLtoBlob = (dataurl) => {
-  var arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-};
-
 export default function ExtractText() {
   let [imageUrl, setImageUrl] = useState();
 
@@ -43,6 +31,7 @@ export default function ExtractText() {
   const { analysing } = extractState;
 
   let uploadToS3AndExtract = async (img) => {
+    console.log("yey!!!");
     let { bucket, key, url } = await uploadToS3(img);
     setImageUrl(url);
     setExtractState({
@@ -78,8 +67,10 @@ export default function ExtractText() {
         <Loading text="Extracting text from image..." />
       ) : (
         <>
-          <Camera constraints={selfieConstraints} />
-          <Camera constraints={labelConstraints} />
+          <Camera
+            uploadToS3AndExtract={uploadToS3AndExtract}
+            constraints={selfieConstraints}
+          />
         </>
       )}
 
