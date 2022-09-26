@@ -69,7 +69,7 @@ export default function ExtractText() {
         <>
           <Camera
             uploadToS3AndExtract={uploadToS3AndExtract}
-            constraints={selfieConstraints}
+            constraints={labelConstraints}
           />
         </>
       )}
