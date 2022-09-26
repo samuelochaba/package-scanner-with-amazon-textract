@@ -18,7 +18,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
       <Webcam
         audio={false}
         screenshotFormat="image/jpeg"
-        className="h-[40vh]    mx-auto rounded-tl-lg rounded-tr-lg mt-5"
+        className="h-[30vh] w-[90vw]    mx-auto rounded-tl-lg rounded-tr-lg mt-5"
         videoConstraints={constraints}
       >
         {
@@ -37,7 +37,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
       <Webcam
         audio={false}
         screenshotFormat="image/jpeg"
-        className="h-[40vh] mx-auto rounded-bl-lg rounded-br-lg"
+        className="h-[30vh] w-[90vw]  mx-auto rounded-bl-lg rounded-br-lg"
         videoConstraints={constraints}
       >
         {({ getScreenshot }) => (
