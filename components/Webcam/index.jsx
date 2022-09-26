@@ -15,7 +15,7 @@ let dataURLtoBlob = (dataurl) => {
 const Camera = ({ constraints, uploadToS3AndExtract }) => {
   return (
     <>
-      <div className="h-[30vh] flex items-center justify-center text-center relative   w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
+      <div className="h-[35vh] flex items-center justify-center text-center relative   w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
@@ -36,7 +36,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           }
         </Webcam>
       </div>
-      <div className="h-[30vh] w-[90vw] flex items-center  justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
+      <div className="h-[35vh] w-[90vw] flex items-center  justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
