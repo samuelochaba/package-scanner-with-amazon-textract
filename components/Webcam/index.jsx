@@ -20,7 +20,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           audio={false}
           screenshotFormat="image/jpeg"
           videoConstraints={constraints}
-          className="w-[100%] absolute left-0 bottom-0"
+          className="absolute left-0 bottom-0"
         >
           {
             ({ getScreenshot }) => ""
@@ -40,7 +40,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          className="w-[100%] absolute left-0 bottom-0"
+          className="absolute left-0 bottom-0"
           videoConstraints={constraints}
         >
           {({ getScreenshot }) => (
