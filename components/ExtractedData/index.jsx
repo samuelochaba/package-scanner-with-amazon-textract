@@ -50,7 +50,7 @@ const ExtractedData = ({ extractedData, imageUrl }) => {
   return (
     <div className="flex flex-col  items-center mx-auto border w-[95%] max-w-[400px] rounded-lg">
       <div
-        className="w-full h-[200px] rounded-lg"
+        className="w-full h-[200px] rounded-lg" 
         // style={{
         //   background: `url(${imageUrl})`,
         //   backgroundPosition: "center",

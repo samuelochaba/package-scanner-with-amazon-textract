@@ -19,8 +19,8 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          videoConstraints={constraints}
-          className="absolute left-0 top-0"
+          videoConstraints={{ facingMode: "user" }}
+          className="absolute left-0 bottom-0 rounded-tl-lg rounded-tr-lg"
         >
           {
             ({ getScreenshot }) => ""
@@ -36,16 +36,21 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           }
         </Webcam>
       </div>
-      <div className="h-[35vh] w-[90vw] flex items-center  overflow-hidden justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
+      <div className=" h-[35vh] w-[90vw] flex items-center  overflow-hidden justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          className="absolute left-0 top-0"
-          videoConstraints={constraints}
+          className="absolute left-0 top-0 rounded-bl-lg rounded-br-lg"
+          videoConstraints={{
+            // facingMode: {
+            //   exact: "environment",
+            // },
+            facingMode: "user",
+          }}
         >
           {({ getScreenshot }) => (
             <button
-              className="rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+              className="absolute rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px] bottom-5"
               onClick={async () => {
                 let img = getScreenshot();
                 uploadToS3AndExtract(dataURLtoBlob(img));
