@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Webcam from "react-webcam";
 let dataURLtoBlob = (dataurl) => {
@@ -13,6 +14,21 @@ let dataURLtoBlob = (dataurl) => {
 };
 
 const Camera = ({ constraints, uploadToS3AndExtract }) => {
+  const selfieRef = React.useRef();
+  const imagesRef = React.useRef();
+  const [camState, setCamState] = React.useState({
+    selfieImage: "",
+    labelImage: "",
+  });
+
+  const { selfieImage, labelImage } = camState;
+
+  const snapAndScan = (label) => {
+    imagesRef.current = label;
+    selfieRef.current.click();
+    uploadToS3AndExtract(dataURLtoBlob(label));
+  };
+
   return (
     <>
       <div className="h-[35vh] flex items-center justify-center text-center relative overflow-hidden   w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
@@ -20,25 +36,29 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           audio={false}
           screenshotFormat="image/jpeg"
           videoConstraints={{
-            facingMode: {
-              exact: "environment",
-            },
-            // facingMode: "user",
+            // facingMode: {
+            //   exact: "environment",
+            // },
+            facingMode: "user",
           }}
           className="absolute left-0 top-0 object-cover h-full w-full"
         >
-          {
-            ({ getScreenshot }) => ""
-            // <button
-            //   className="mt-[10px] rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
-            //   onClick={async () => {
-            //     let img = getScreenshot();
-            //     uploadToS3AndExtract(dataURLtoBlob(img));
-            //   }}
-            // >
-            //   Scan
-            // </button>
-          }
+          {({ getScreenshot }) => (
+            <button
+              ref={selfieRef}
+              className="hidden mt-[10px] rounded-full mx-auto border border-green-400 items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px]"
+              onClick={async () => {
+                let img = getScreenshot();
+                setCamState({
+                  ...camState,
+                  selfieImage: img,
+                  labelImage: imagesRef.current,
+                });
+              }}
+            >
+              Scan
+            </button>
+          )}
         </Webcam>
       </div>
       <div className=" h-[35vh] w-[90vw] flex items-center  overflow-hidden justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
@@ -57,8 +77,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
             <button
               className="absolute rounded-full mx-auto border border-green-400 flex items-center font-ptmono justify-center text-sm w-[50px] h-[50px] bg-blue-600 text-white p-[10px] bottom-5"
               onClick={async () => {
-                let img = getScreenshot();
-                uploadToS3AndExtract(dataURLtoBlob(img));
+                snapAndScan(getScreenshot());
               }}
             >
               Scan

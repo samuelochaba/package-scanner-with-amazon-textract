@@ -13,10 +13,6 @@ const labelConstraints = {
   facingMode: { exact: "environment" },
 };
 
-const selfieConstraints = {
-  facingMode: "user",
-};
-
 export default function ExtractText() {
   let [imageUrl, setImageUrl] = useState();
 
@@ -31,7 +27,6 @@ export default function ExtractText() {
   const { analysing } = extractState;
 
   let uploadToS3AndExtract = async (img) => {
-    console.log("yey!!!");
     let { bucket, key, url } = await uploadToS3(img);
     setImageUrl(url);
     setExtractState({
