@@ -15,7 +15,7 @@ let dataURLtoBlob = (dataurl) => {
 const Camera = ({ constraints, uploadToS3AndExtract }) => {
   return (
     <>
-      <div className="h-[35vh] flex items-center justify-center text-center relative overflow-hiddenx   w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
+      <div className="h-[35vh] flex items-center justify-center text-center relative overflow-hidden   w-[90vw] mx-auto rounded-tl-lg rounded-tr-lg mt-5">
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
@@ -25,7 +25,7 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
             },
             // facingMode: "user",
           }}
-          className="absolute left-0 bottom-0 rounded-tl-lg rounded-tr-lg"
+          className="absolute left-0 top-0 object-cover h-full w-full"
         >
           {
             ({ getScreenshot }) => ""
@@ -41,11 +41,11 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           }
         </Webcam>
       </div>
-      <div className=" h-[35vh] w-[90vw] flex items-center  overflow-hiddenl justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
+      <div className=" h-[35vh] w-[90vw] flex items-center  overflow-hidden justify-center text-center relative mx-auto rounded-bl-lg rounded-br-lg">
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          className="absolute left-0 top-0 rounded-bl-lg rounded-br-lg"
+          className="absolute left-0 top-0 rounded-bl-lg object-cover h-full w-full"
           videoConstraints={{
             facingMode: {
               exact: "environment",
