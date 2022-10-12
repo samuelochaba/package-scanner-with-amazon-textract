@@ -19,7 +19,12 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          videoConstraints={{ facingMode: "user" }}
+          videoConstraints={{
+            facingMode: {
+              exact: "environment",
+            },
+            // facingMode: "user",
+          }}
           className="absolute left-0 bottom-0 rounded-tl-lg rounded-tr-lg"
         >
           {
