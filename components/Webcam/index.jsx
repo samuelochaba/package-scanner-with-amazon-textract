@@ -42,10 +42,10 @@ const Camera = ({ constraints, uploadToS3AndExtract }) => {
           screenshotFormat="image/jpeg"
           className="absolute left-0 top-0 rounded-bl-lg rounded-br-lg"
           videoConstraints={{
-            // facingMode: {
-            //   exact: "environment",
-            // },
-            facingMode: "user",
+            facingMode: {
+              exact: "environment",
+            },
+            // facingMode: "user",
           }}
         >
           {({ getScreenshot }) => (
